@@ -49,11 +49,11 @@
 
          {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="btn btn-primary ml-lg-2" href="#">Dashboard</a>
+              <a class="btn btn-primary ml-lg-2" href="{%url 'dashboard'%}">Dashboard</a>
             </li>
             {%else%}
             <li class="nav-item">
-                <a class="btn btn-primary ml-lg-2" href="#">Register</a>
+                <a class="btn btn-primary ml-lg-2" href="{%url 'signup'%}">Register</a>
               </li>
               {%endif%}
           </ul>
