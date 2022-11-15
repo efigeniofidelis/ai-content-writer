@@ -14,7 +14,7 @@ def anonymous_required(function=None,redirect_url=None):
         redirect_url = 'dashboard'
 
     actual_decorator = user_passes_test(
-        lambda u: u.is_anonymous(),
+        lambda u: u.is_anonymous,
         login_url=redirect_url
     )
 
