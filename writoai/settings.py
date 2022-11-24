@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landing',
+    'dashboard',
+    'authorisation',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +122,7 @@ USE_TZ = True
 
 #LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
+OPENAI_API_KEYS = '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'
 
 
 #resized
@@ -143,6 +147,8 @@ MEDIA_URL = '/uploads/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

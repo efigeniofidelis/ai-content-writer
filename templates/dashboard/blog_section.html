@@ -1,0 +1,36 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10"></div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="mb-3">Writo generated following blog topics for you!!💃</h2>
+                  {% for blog in blogTopics%}
+                  <P>{{blog}}</P>
+                  <br>
+                  {% endfor%}
+                </div>
+                <div class="col-lg-6">
+                    <img src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
+
+                </div>
+            </div>
+
+        </div>
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}

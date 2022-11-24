@@ -89,7 +89,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="{%url 'dashboard'%}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -106,9 +106,9 @@
          
             <!-- Cards -->
             <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="{% url 'generate-blog-topic' %}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Generate blogs topic</div>
+                <div data-i18n="Basic">Generate blogs</div>
               </a>
             </li>
 
@@ -158,8 +158,11 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
+                      {% if user.profile.profileimage.name %}
+                      <img src="{{user.profile.profileimage.url}}" alt class="w-px-40 h-auto rounded-circle" />
+                      {%else%}
                       <img src="{% static 'main/img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
-                    </div>
+                       {%endif%}                    </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
@@ -167,11 +170,15 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
+                              {% if user.profile.profileimage.name %}
+                              <img src="{{user.profile.profileimage.url}}" alt class="w-px-40 h-auto rounded-circle" />
+                              {%else%}
                               <img src="{% static 'main/img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
+                               {%endif%}
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
+                            <span class="fw-semibold d-block">{{user.first_name}} {{user.last_name}}</span>
                             <small class="text-muted">{{user.email}}</small>
                           </div>
                         </div>
@@ -181,7 +188,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="{%url 'profile'%}">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
