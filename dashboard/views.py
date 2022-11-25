@@ -14,19 +14,26 @@ from django.contrib import messages
 def dashboard(request):
     emptyBlogs = []
     completeBlogs = []
+    monthCount = 0
 
     blogs = Blog.objects.filter(profile=request.user.profile)
     for blog in blogs:
         sections = BlogSection.objects.filter(blog=blog)
         if sections.exists():
-            blog.words = len(blog.title.split(' '))
+            #calculate the blog words
+            blogWords = 0
+            for section in sections:
+                blogWords += int(section.wordCount)
+                monthCount += int(section.wordCount)
+            blog.wordCount = str(blogWords)
+            blog.save()
             completeBlogs.append(blog)
         else:
             emptyBlogs.append(blog)
 
     context = {}
-    context['numBlogs'] = 4
-    context['monthCount'] = 5432
+    context['numBlogs'] = len(completeBlogs)
+    context['monthCount'] = str(monthCount) #update later
     context['countReset'] = '12 dec 2022'
     context['emptyBlogs'] = emptyBlogs
     context['completeBlogs'] = completeBlogs

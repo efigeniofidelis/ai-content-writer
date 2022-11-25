@@ -85,6 +85,7 @@ class Blog(models.Model):
 class BlogSection(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(null=True,blank=True)
+    wordCount = models.CharField(null=True,blank=True,max_length=200)
     
     
     blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
@@ -111,4 +112,8 @@ class BlogSection(models.Model):
 
         self.slug = slugify('{} {}'.format(self.title, self.uniqueId))
         self.last_updated = timezone.localtime(timezone.now())
+        #count words
+        if self.body:
+            x = len(self.body.split(' '))
+            self.wordCount = str(x)
         super(BlogSection, self).save(*args, **kwargs)
