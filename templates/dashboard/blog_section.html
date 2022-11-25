@@ -15,14 +15,35 @@
 
             <div class="col-lg-10"></div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <h2 class="mb-3">Writo generated following blog topics for you!!💃</h2>
-                  {% for blog in blogTopics%}
-                  <P>{{blog}}</P>
-                  <br>
-                  {% endfor%}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Blog Tiitle</th>
+                            <th>Save topic</th>
+                            <th>Use topic</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for blog in blogTopics%}
+
+                        <tr>
+                            <td>{{blog}}</td>
+                            <td><a href="{% url 'save-blog-topic' blog %}"><button class="btn btn-outline-primary">Save topic</button></a></td>
+                            <td><a href="{% url 'use-blog-topic' blog %}"><button class="btn btn-primary">Use Topic</button></a></td>
+                        </tr>
+                        {% endfor%}
+
+                    </tbody>
+                </table>
+                 
+                 
+                 
+                
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <img src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
 
                 </div>

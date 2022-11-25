@@ -1,0 +1,37 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10">
+                <h2 class="mb-3">{{blog.title}}</h2>
+                <h5>keywords: <span class="badge bg-primary">{{blog.keywords}}</span></h5>
+            
+                {% for section in blogSections %}
+                <div class="mt-3">
+                  <h3>{{section.title}}</h3>
+                  {{section.body|safe}}
+                </div>
+             {% endfor%}
+
+            </div>
+            
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}
+
+
+
+

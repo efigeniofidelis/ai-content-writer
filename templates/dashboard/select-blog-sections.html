@@ -1,0 +1,71 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10"></div>
+            <form class="" action="#" method="post">
+                {% csrf_token%}
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h2 class="mb-3">select the blog section that you would like to include in the blog💃</h2>
+    
+                     <table class="table table-hover">
+                        <thead>
+
+                            <tr>
+                                <th>select</th>
+                                <th>topic</th>
+                            </tr>
+                        </thead>
+                        
+
+                        <tbody>
+                            {% for section in blogSections%}
+                            <tr>
+                                <td>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox"  name="{{section}}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                 {{section}}
+                                </td>
+                            </tr>
+                            {% endfor%}
+                        </tbody>
+
+                     </table>
+                     
+                    
+                    </div>
+                    <div class="col-lg-4">
+                        <img class="img-fluid" src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
+                      
+                      <div class="mt-5">
+                        <button type="submit" class="btn btn-primary">generate full blog</button>
+                      </div>
+                    </div>
+                </div>
+    
+            </div>
+            </form>
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}
+
+
+
+
