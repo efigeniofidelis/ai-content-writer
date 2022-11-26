@@ -10,6 +10,27 @@
   <!-- Layout Demo -->
   <div class="layout-demo-wrapper">
 
+{% if not allowance %}
+    <div class="row">
+
+      <div class="col-lg-12">
+
+        <div class="alert alert-warning">
+          <h6 class="alert-heading fw-blod mb-1">Upgrade Account</h6>
+          <p class="mb-0">your limit is miximized out you word limit of the month, please upgrade your account, <a href="{% url 'billing'%}">here</a></p>
+        </div>
+      </div>
+    </div>
+{% endif %}
+
+
+
+
+
+
+
+
+
     <div class="row">
       <div class="col-lg-8">
         <div class="card">
@@ -32,6 +53,8 @@
           </div>
         </div>
       </div>
+
+      {% if completeBlogs|length > 0%}
       <div class="card mt-3">
         <h5 class="card-header">Completed Blogs</h5>
         <div class="table-responsive">
@@ -50,8 +73,8 @@
               {% for blog in completeBlogs%}
               <tr>
                 <td>
-                  <h7>{{blog.blogIdea}}</h7>
-                  <h6>{{blog.title}}</h6>
+                  <h5>{{blog.blogIdea}}</h5>
+                  {{blog.title}}
                 </td>
                 <td>{{blog.audience}}</td>
                 <td>{{blog.keywords}}</td>
@@ -63,12 +86,14 @@
           </table>
         </div>
       </div>
+      {% endif%}
 
 
 </div>
 
 
   <div class="col-lg-4">
+    {% if emptyBlogs|length > 0%}
     <div class="card h-100">
       <div class="card-header d-flex align-items-center justify-content-between">
         <h5 class="card-title m-0 me-2">Saved Blogs</h5>
@@ -97,6 +122,7 @@
       </div>
     </div>
 
+    {%endif%}
 
   </div>
 

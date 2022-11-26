@@ -123,6 +123,7 @@ USE_TZ = True
 #LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 OPENAI_API_KEYS = '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'
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 
 #resized

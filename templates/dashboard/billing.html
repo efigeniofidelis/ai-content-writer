@@ -1,0 +1,112 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+{%load crispy_forms_tags%}
+
+
+{%block body%}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Billing</h4>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="#"><i class="bx bx-user me-1"></i> Billing</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="pages-account-settings-notifications.html"
+              ><i class="bx bx-bell me-1"></i> Notifications</a
+            >
+          </li> -->
+
+        </ul>
+
+          <!-- /Account -->
+        </div>
+        <div class="card">
+          <h5 class="card-header">Billing information</h5>
+          <div class="card-body">
+            <div class="mb-3 col-12 mb-0">
+
+                <script src="https://www.paypal.com/sdk/js?client-id=AbYzuqdYvJW44ohbtK6yyhGr3fczlrYX_eqdLziH_IWiMqI6GLdfd9HJAhRT-W_v8OYV6cJ-rCMfS0Wb&vault=true&intent=subscription">
+                </script>
+
+                {% if user.profile.subscriptionType == 'free'%}
+              <div class="alert alert-warning">
+                <h6 class="alert-heading fw-bold mb-1">You are currently on free tier</h6>
+                <p class="mb-0">you can cancel your subscription at any time.
+                    Upgrade to starter pack to get 40000 words per month
+                </p>
+              </div>
+              <div id="paypal-button-container-1"></div>
+              {% elif user.profile.subscriptionType == 'starter'%}
+              <div class="alert alert-info">
+                <h6 class="alert-heading fw-bold mb-1">You are currently on starter tier</h6>
+                <p class="mb-0">you can cancel your subscription at any time.
+                    Upgrade to starter pack to get unlimited words per month
+                </p>
+              </div>
+              <div id="paypal-button-container-2"></div>              
+              
+              
+              {% elif user.profile.subscriptionType == 'advanced'%}
+              <div class="alert alert-success">
+                <h6 class="alert-heading fw-bold mb-1">Great!!  You are currently on Advanced tier</h6>
+                <p class="mb-0">you can cancel your subscription at any time.
+                    
+                </p>
+              </div>
+              {%else%}
+              <p>something went wrong</p>
+              {%endif%}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}
+
+{% block js%}
+
+<script>
+    //starter plan subscription button
+    paypal.Buttons({
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          'plan_id': 'P-6HG52731HX874025KMOA5YXI' // Creates the subscription
+        });
+      },
+      onApprove: function(data, actions) {
+        alert('You have successfully created subscription ' + data.subscriptionID); // Optional message given to subscriber
+        
+    },
+      onCancel: function(data){
+        alert('you have canceled the subscription: (');
+      }
+    }).render('#paypal-button-container-1'); // Renders the PayPal button
+  </script>
+
+
+<script>
+    //advanced plan subscription button
+    paypal.Buttons({
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          'plan_id': 'P-3J1227734U6832258MOA54SQ' // Creates the subscription
+        });
+      },
+      onApprove: function(data, actions) {
+        alert('You have successfully created subscription ' + data.subscriptionID); // Optional message given to subscriber
+      },
+      onCancel: function(data){
+        alert('you have canceled the subscription: (');
+      }
+    }).render('#paypal-button-container-2'); // Renders the PayPal button
+  </script>
+{%endblock%}

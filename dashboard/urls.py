@@ -13,5 +13,8 @@ urlpatterns = [
     path('save-blog-topic/<str:blogTopic>/',saveBlogTopic,name='save-blog-topic'),
     path('use-blog-topic/<str:blogTopic>/',useBlogTopic,name='use-blog-topic'),
     path('view-generated-blog/<slug:slug>/',viewGeneratedBlog,name='view-generated-blog'),
+#billing page
 
+    path('billing',billing,name='billing'),
+   # path('d5717186-3502-4378-8308-e2700382498b',webhook,name='webhook'),
 ]

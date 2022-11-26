@@ -113,6 +113,73 @@
             </li>
 
 
+<!--content assistant-->
+
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Content Assistant</span>
+</li>
+
+
+
+<!-- Components -->
+
+<!-- Cards -->
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Summarization</div>
+  </a>
+</li>
+
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">keywords from text</div>
+  </a>
+</li>
+
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Product name generator</div>
+  </a>
+</li>
+
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Extract contact information</div>
+  </a>
+</li>
+
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Notes to summary</div>
+  </a>
+</li>
+
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">English translation to other languages</div>
+  </a>
+</li>
+
+<li class="menu-item">
+  <a href="#" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Summarize for a 2nd grader</div>
+  </a>
+</li>
+
+
+
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Logout</span>
             </li>
@@ -195,7 +262,7 @@
                     </li>
 
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="{% url 'billing'%}">
                         <span class="d-flex align-items-center align-middle">
                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
                           <span class="flex-grow-1 align-middle">Billing</span>
@@ -292,6 +359,9 @@
     <script src="{% static 'main/js/main.js'%}"></script>
 
     <!-- Page JS -->
+
+    {% block js%}
+    {%endblock%}
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -75,12 +75,12 @@ def generateBlogSections(topic,audience,keywords):
 
 
 
-def generateBlogSectionsDetails(blogTopic,sectionTopic,audience,keywords):
+def generateBlogSectionsDetails(blogTopic,sectionTopic,audience,keywords,profile):
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt="Generate detailed blog write up for the following blog section heading, given the blog title, audience and keywords.\nBlog Title: {}\nBlog Section Heading: {}\nAudience: {}\nKeywords: {}\n\n".format(blogTopic,sectionTopic,audience,keywords),
             temperature=0.7,
-            max_tokens=500,
+            max_tokens=2000,
             top_p=1,
             best_of =1,
             frequency_penalty=0,
@@ -89,10 +89,21 @@ def generateBlogSectionsDetails(blogTopic,sectionTopic,audience,keywords):
         if 'choices' in response:
             if len(response['choices'])>0:
                 res =  response['choices'][0]['text']
-                cleanres = res.replace('\n','<br>')
+                if not res == '':
+                    cleanres = res.replace('\n','<br>')
+                if profile.monthlyCount:
+                    oldCount = int(profile.monthlyCount)
+                else:
+                    oldCount = 0
+                
+                oldCount += len(cleanres.split(' '))
+                profile.monthlyCount = str(oldCount)
+                profile.save()
                 return cleanres
             else:
-                return []
+                return ''
+
+            
         else:
              return [] 
 

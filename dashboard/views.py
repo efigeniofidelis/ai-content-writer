@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from .models import *
 from dashboard.functions import *
 from django.contrib import messages
+import time
+
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -31,12 +35,14 @@ def dashboard(request):
         else:
             emptyBlogs.append(blog)
 
+
     context = {}
     context['numBlogs'] = len(completeBlogs)
-    context['monthCount'] = str(monthCount) #update later
-    context['countReset'] = '12 dec 2022'
+    context['monthCount'] = request.user.profile.monthlyCount #update later
+    context['countReset'] = '12 dec 2022' #update later
     context['emptyBlogs'] = emptyBlogs
     context['completeBlogs'] = completeBlogs
+    context['allowance'] =  checkCountAllowance(request.user.profile) ##will also use it to restrict user if not subscribe will not use different functionalities just add {%if not allowance%}{%endif%} on the specific button on template
 
 
     return render(request,'dashboard/home.html',context)
@@ -134,6 +140,31 @@ def saveBlogTopic(request,blogTopic):
 @login_required
 def createBlogFromTopic(request,uniqueId):
     context = {}
+
+
+    if request.method == 'POST':
+        for val in request.POST:
+            if not 'csrfmiddlewaretoken' in val:
+
+                prevBlog = ''
+                bSections = BlogSection.objects.filter(blog=blog).order_by('date_created')
+                for sec in bSections:
+                    prevBlog += sec.title + '\n'
+                    prevBlog += sec.body.replace('<br','\n')
+                prevBlog = '' ##will use it for rewirting blog in function
+
+                #generating the blog section details
+                section  = generateBlogSectionsDetails(blog.title,val,blog.audience,blog.keywords,request.user.profile)
+
+                #saving into database
+                blogSec = BlogSection.objects.create(
+                    title = val,
+                    body = section,
+                    blog = blog)
+                blogSec.save()
+                time.sleep(2)
+
+        return redirect('view-generated-blog',slug= blog.slug)
     try:
         blog = Blog.objects.get(uniqueId=uniqueId)
     except:
@@ -150,21 +181,7 @@ def createBlogFromTopic(request,uniqueId):
         messages.error(request,"oops we coounld not generate any blog sections for you for you")
         return redirect('blog-topic')
    
-    if request.method == 'POST':
-        for val in request.POST:
-            if not 'csrfmiddlewaretoken' in val:
 
-                #generating the blog section details
-                section  = generateBlogSectionsDetails(blog.title,val,blog.audience,blog.keywords)
-
-                #saving into database
-                blogSec = BlogSection.objects.create(
-                    title = val,
-                    body = section,
-                    blog = blog)
-                blogSec.save()
-
-        return redirect('view-generated-blog',slug= blog.slug)
 
 
     return render(request,'dashboard/select-blog-sections.html',context)
@@ -217,9 +234,14 @@ def useBlogTopic(request,blogTopic):
     if request.method == 'POST':
         for val in request.POST:
             if not 'csrfmiddlewaretoken' in val:
+                prevBlog = ''
+                bSections = BlogSection.objects.filter(blog=blog).order_by('date_created')
+                for sec in bSections:
+                    prevBlog += sec.title + '\n'
+                    prevBlog += sec.body.replace('<br','\n')
 
                 #generating the blog section details
-                section  = generateBlogSectionsDetails(blogTopic,val,request.session['audience'],request.session['keywords'])
+                section  = generateBlogSectionsDetails(blogTopic,val,request.session['audience'],request.session['keywords'],request.user.profile)
 
                 #saving into database
                 blogSec = BlogSection.objects.create(
@@ -254,4 +276,65 @@ def viewGeneratedBlog(request,slug):
 
 
 
+@login_required
+def checkCountAllowance(profile):
+    if profile.subscribed:
+        
+        #user has a subscription
+        type = profile.subscriptionType
 
+        if type == 'free':
+            max_limit = 5000
+            if profile.monthlyCount:
+                if int(profile.monthlyCount) < max_limit:
+                    return True
+                else:
+                    return False
+            else:
+                return True
+
+        
+        elif type == 'starter':
+            max_limit =40000
+            if profile.monthlyCount:
+                if int(profile.monthlyCount) < max_limit:
+                    return True
+                else:
+                    return False
+            else:
+                return True
+
+            
+
+        elif type == 'advanced':
+            return True
+
+        else:
+            return False
+    else:
+        max_limit = 5000
+        if profile.monthlyCount:
+            if int(profile.monthlyCount) < max_limit:
+                return True
+            else:
+                return False
+        else:
+            return True
+
+
+@login_required
+def billing(request):
+
+    context = {}
+    return render(request,'dashboard/billing.html',context)
+
+
+@require_POST
+@csrf_exempt
+def webhook(request):
+    #verify taht the request is coming from paypal
+
+    #check the type of event
+    #1. subscription created
+    #2. subscription cancellled
+    return redirect('billing')
