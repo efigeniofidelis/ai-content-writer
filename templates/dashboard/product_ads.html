@@ -1,0 +1,49 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10"></div>
+            <div class="row">
+                <div class="col-lg-6">
+                  <img src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-3">enter your product idea to generate ad for digital marketing</h2>
+                     <form class="" action="#" method="post">
+                        {%csrf_token%}
+                        <div class="mb-3">
+                          <label for="blogIdea" class="form-label">Product description</label>
+                          <input type="text" class="form-control" name="product_desc"  placeholder="Enter your product description" autofocus required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="keywords" class="form-label">keywords</label>
+                            <input type="text" class="form-control" name="seed_words"  placeholder="Enter your product related keywords" autofocus required/>
+                          </div>
+
+
+                          <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="submit">Generate Product ad</button>
+                          </div>
+                     
+                        </form>
+                </div>
+            </div>
+
+        </div>
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}

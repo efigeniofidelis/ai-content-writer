@@ -322,6 +322,144 @@ def checkCountAllowance(profile):
             return True
 
 
+
+# product names are not saving yet just only working with sessions will save at end or when required.
+@login_required
+def productTopic(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the blog idea from a submitting form
+        product_names = request.POST['product_names']
+        #saving blog idea string in a session in order to use it later
+        request.session['product_names'] = product_names
+        seed_words = request.POST['seed_words']
+        request.session['seed_words'] = seed_words
+
+
+        productTopics = generateProductNames(product_names,seed_words)
+        if len(productTopics) > 0:
+            request.session['productTopics'] = productTopics
+            return redirect('show_names')
+        else:
+            messages.error(request,"oops we coounld not generate ideas for you")
+            return redirect('show_names')
+
+    return render(request,'dashboard/product_names.html',context)
+
+
+
+@login_required
+def show_names(request):
+    if 'productTopics' in request.session:
+        pass
+    else:
+        messages.error(request,"start by making product names")
+        return redirect('product_names')
+
+    context = {}
+    context['productTopics'] = request.session['productTopics']
+
+    return render(request,'dashboard/show_names.html',context)
+
+
+
+
+#for add creation
+
+
+#for add creation save function needs to be created in future
+@login_required
+def generate_ads(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        product_desc = request.POST['product_desc']
+        #saving product desc string in a session in order to use it later
+        request.session['product_desc'] = product_desc
+        seed_words = request.POST['seed_words']
+        request.session['seed_words'] = seed_words
+
+
+        generate_ads = product_ads(product_desc,seed_words)
+        if len(generate_ads) > 0:
+            request.session['generate_ads'] = generate_ads
+            return redirect('show_product_ads')
+        else:
+            messages.error(request,"oops we coounld not generate ideas for you")
+            return redirect('show_product_ads')
+
+    return render(request,'dashboard/product_ads.html',context)
+
+
+
+@login_required
+def show_ads(request):
+    if 'productTopics' in request.session:
+        pass
+    else:
+        messages.error(request,"start by making product names")
+        return redirect('product_ads')
+
+    context = {}
+    context['generate_ads'] = request.session['generate_ads']
+
+    return render(request,'dashboard/show_product_ads.html',context)
+
+
+
+#keywords extractor
+
+
+#keywords extractor save function need to be created
+@login_required
+def extract_keywords(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        product_desc = request.POST['product_desc']
+        #saving product desc string in a session in order to use it later
+        request.session['product_desc'] = product_desc
+
+
+        keywords = text_to_keywords(product_desc)
+        if len(keywords) > 0:
+            request.session['extract_keywords'] = keywords
+            return redirect('show_text_to_keyword')
+        else:
+            messages.error(request,"oops we coounld not generate keywords for you")
+            return redirect('show_text_to_keyword')
+
+    return render(request,'dashboard/text_to_keywords.html',context)
+
+
+
+@login_required
+def show_keywords(request):
+    if 'extract_keywords' in request.session:
+        pass
+    else:
+        messages.error(request,"start by providing the text")
+        return redirect('text_to_keyword')
+
+    context = {}
+    context['extract_keywords'] = request.session['extract_keywords']
+
+    return render(request,'dashboard/show_text_to_keywords.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
 @login_required
 def billing(request):
 

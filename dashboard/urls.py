@@ -13,6 +13,21 @@ urlpatterns = [
     path('save-blog-topic/<str:blogTopic>/',saveBlogTopic,name='save-blog-topic'),
     path('use-blog-topic/<str:blogTopic>/',useBlogTopic,name='use-blog-topic'),
     path('view-generated-blog/<slug:slug>/',viewGeneratedBlog,name='view-generated-blog'),
+#product names
+
+    path('product_names',productTopic,name='product_names'),
+    path('show_names',show_names,name='show_names'),
+
+
+#product ads
+
+    path('product_ads',generate_ads,name='product_ads'),
+    path('show_product_ads',show_ads,name='show_product_ads'),
+
+#text to keyword
+
+    path('text_to_keyword',extract_keywords,name='text_to_keyword'),
+    path('show_text_to_keyword',show_keywords,name='show_text_to_keyword'),
 #billing page
 
     path('billing',billing,name='billing'),

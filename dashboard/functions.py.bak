@@ -12,7 +12,7 @@ openai.api_key = settings.OPENAI_API_KEYS
 def generateBlogTopicIdeas(topic,audience,keywords):
     blog_topics = []
     response = openai.Completion.create(
-  model="text-davinci-003",
+  model="text-davinci-002",
   prompt="Generate 5 blog topic ideas on the given topic: {}\nAudience: {}\nkeywords: {} \n*".format(topic,audience,keywords),
   temperature=0.7,
   max_tokens=250,
@@ -46,7 +46,7 @@ def generateBlogTopicIdeas(topic,audience,keywords):
 def generateBlogSections(topic,audience,keywords):
     blog_sections = []
     response = openai.Completion.create(
-  model="text-davinci-003",
+  model="text-davinci-002",
   prompt="Generate 5 blog section titles for the provided blog topic, Audience, and keywords: {}\nAudience: {}\nkeywords: {} \n*".format(topic,audience,keywords),
   temperature=0.7,
   max_tokens=250,
@@ -77,7 +77,7 @@ def generateBlogSections(topic,audience,keywords):
 
 def generateBlogSectionsDetails(blogTopic,sectionTopic,audience,keywords,profile):
         response = openai.Completion.create(
-            model="text-davinci-003",
+            model="text-davinci-002",
             prompt="Generate detailed blog write up for the following blog section heading, given the blog title, audience and keywords.\nBlog Title: {}\nBlog Section Heading: {}\nAudience: {}\nKeywords: {}\n\n".format(blogTopic,sectionTopic,audience,keywords),
             temperature=0.7,
             max_tokens=2000,
@@ -107,111 +107,3 @@ def generateBlogSectionsDetails(blogTopic,sectionTopic,audience,keywords,profile
         else:
              return [] 
 
-
-
-
-
-
-
-
-def generateProductNames(p_desc,seedwords):
-    product_names = []
-    response = openai.Completion.create(
-  model="text-davinci-003",
-  prompt="Generate product names on the given topic.\nProduct description: {}\nSeed words: {}\n*".format(p_desc,seedwords),
-  temperature=0.8,
-  max_tokens=60,
-  top_p=1,
-  frequency_penalty=0,
-  presence_penalty=0
-)
-
-    if 'choices' in response:
-        if len(response['choices'])>0:
-            res = response['choices'][0]['text']
-        else:
-            return []
-    else:
-        return []
-    
-    a_list = res.split('*')
-    if len(a_list) > 0:
-        for blog in a_list:
-            product_names.append(blog)
-    else:
-        return []
-
-    return product_names
-
-
-
-#function for product ad generation
-
-
-def product_ads(product_desc,keywords):
-    product_ad = []
-
-    response = openai.Completion.create(
-  model="text-davinci-003",
-  prompt="Write a creative ad for the following product to run on Facebook aimed at parents:\n\nProduct: {}\nkeywords: {}\n".format(product_desc,keywords),
-  temperature=0.5,
-  max_tokens=100,
-  top_p=1,
-  frequency_penalty=0,
-  presence_penalty=0
-)
-
-    if 'choices' in response:
-        if len(response['choices'])>0:
-            res = response['choices'][0]['text']
-        else:
-            return []
-    else:
-        return []
-    
-    a_list = res.split('*')
-    if len(a_list) > 0:
-        for blog in a_list:
-            product_ad.append(blog)
-    else:
-        return []
-
-    return product_ad
-
-
-
-
-
-
-
-#function for keywords extraction from text
-
-def text_to_keywords(product_desc):
-    keywords = []
-
-    response = openai.Completion.create(
-  model="text-davinci-003",
-  prompt="Extract keywords from this text:{}\n*".format(product_desc),
-  temperature=0.5,
-  max_tokens=60,
-  top_p=1,
-  frequency_penalty=0.8,
-  presence_penalty=0
-)
-
-    if 'choices' in response:
-        if len(response['choices'])>0:
-            res = response['choices'][0]['text']
-        else:
-            return []
-    else:
-        return []
-    
-    a_list = res.split('*')
-    if len(a_list) > 0:
-        for blog in a_list:
-            keywords.append(blog)
-    else:
-        return []
-
-    return keywords
