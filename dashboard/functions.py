@@ -336,7 +336,7 @@ def easy_text(text):
   model="text-davinci-003",
   prompt="Transform this text into easy to understand format for a  students and convert difficult vocabulary into easy synonyms:{}\n".format(text),
   temperature=0.7,
-  max_tokens=499,
+  max_tokens=1000,
   top_p=1,
   frequency_penalty=0,
   presence_penalty=0

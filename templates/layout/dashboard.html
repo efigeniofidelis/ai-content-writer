@@ -146,6 +146,13 @@
 
 
 <li class="menu-item">
+  <a href="{% url '#'%}" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-collection"></i>
+    <div data-i18n="Basic">Product Discription Maker </div>
+  </a>
+</li>
+
+<li class="menu-item">
   <a href="{% url 'text_to_keyword'%}" class="menu-link">
     <i class="menu-icon tf-icons bx bx-collection"></i>
     <div data-i18n="Basic">Extract keywords from text</div>
@@ -170,16 +177,16 @@
 
 
 <li class="menu-item">
-  <a href="#" class="menu-link">
+  <a href="{% url 'generate_reviews'%}" class="menu-link">
     <i class="menu-icon tf-icons bx bx-collection"></i>
-    <div data-i18n="Basic">English translation to other languages</div>
+    <div data-i18n="Basic">Review generator</div>
   </a>
 </li>
 
 <li class="menu-item">
-  <a href="#" class="menu-link">
+  <a href="{%url 'text_tranforming'%}" class="menu-link">
     <i class="menu-icon tf-icons bx bx-collection"></i>
-    <div data-i18n="Basic">Summarize for a 2nd grader</div>
+    <div data-i18n="Basic">transform text into easy to understand</div>
   </a>
 </li>
 

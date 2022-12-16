@@ -38,6 +38,18 @@ urlpatterns = [
 
     path('generate_study_notes',generate_study_notes,name='generate_study_notes'),
     path('show_study_notes',show_study_notes,name='show_study_notes'),
+
+
+# generate reviews
+
+    path('generate_reviews',generate_reviews,name='generate_reviews'),
+    path('show_review',show_review,name='show_review'),
+
+
+#transform text inot easy to understand
+
+    path('text_tranforming',text_tranforming,name='text_tranforming'),
+    path('show_text_to_easy',show_text_to_easy,name='show_text_to_easy'),
 #billing page
 
 

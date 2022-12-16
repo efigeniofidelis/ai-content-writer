@@ -1,0 +1,45 @@
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10"></div>
+            <div class="row">
+                <div class="col-lg-6">
+                  <img src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-3">Enter text to transform it into easy wording</h2>
+                     <form class="" action="#" method="post">
+                        {%csrf_token%}
+
+                        <div class="mb-3">
+                            
+                            <textarea class="form-control" placeholder="Enter your text"  name="text" rows="20" cols="70"  autofocus required></textarea>
+                          </div>
+
+
+                          <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="submit">Transform text</button>
+                          </div>
+                     
+                        </form>
+                </div>
+            </div>
+
+        </div>
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}

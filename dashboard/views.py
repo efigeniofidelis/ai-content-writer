@@ -530,6 +530,92 @@ def show_study_notes(request):
     return render(request,'dashboard/show_study_notes.html',context)
 
 
+#functions for generating reviews
+
+@login_required
+def generate_reviews(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        company_type = request.POST['company_type']
+        company_name = request.POST['company_name']
+        keywords = request.POST['keywords']
+        #saving product desc string in a session in order to use it later
+        request.session['company_type'] = company_type
+        request.session['company_name'] = company_name
+        request.session['keywords'] = keywords
+
+
+        review = review_generator(company_type,company_name,keywords)
+        if len(review) > 0:
+            request.session['generate_reviews'] = review
+            return redirect('show_review')
+        else:
+            messages.error(request,"oops we coounld not generate keywords for you")
+            return redirect('show_review')
+
+    return render(request,'dashboard/generate_review.html',context)
+
+
+
+@login_required
+def show_review(request):
+    if 'generate_reviews' in request.session:
+        pass
+    else:
+        messages.error(request,"start by providing the text")
+        return redirect('generate_reviews')
+
+    context = {}
+    context['generate_reviews'] = request.session['generate_reviews']
+
+    return render(request,'dashboard/show_review.html',context)
+
+
+
+
+#function for transforming text into easy to understand form
+
+@login_required
+def text_tranforming(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        text = request.POST['text']
+
+        #saving product desc string in a session in order to use it later
+        request.session['text'] = text
+
+
+
+        text_easy= easy_text(text)
+        if len(text_easy) > 0:
+            request.session['text_transforming'] = text_easy
+            return redirect('show_text_to_easy')
+        else:
+            messages.error(request,"oops we coounld not generate keywords for you")
+            return redirect('show_text_to_easy')
+
+    return render(request,'dashboard/text_to_easy.html',context)
+
+
+
+@login_required
+def show_text_to_easy(request):
+    if 'text_transforming' in request.session:
+        pass
+    else:
+        messages.error(request,"start by providing the text")
+        return redirect('text_transforming')
+
+    context = {}
+    context['text_transforming'] = request.session['text_transforming']
+
+    return render(request,'dashboard/show_text_to_easy.html',context)
+
+
 
 
 
