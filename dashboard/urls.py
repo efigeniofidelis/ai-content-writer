@@ -28,7 +28,18 @@ urlpatterns = [
 
     path('text_to_keyword',extract_keywords,name='text_to_keyword'),
     path('show_text_to_keyword',show_keywords,name='show_text_to_keyword'),
+
+#extraxt contact info
+
+    path('contact_info',contact_info,name='contact_info'),
+    path('show_contact',show_contact,name='show_contact'),
+
+#study notes
+
+    path('generate_study_notes',generate_study_notes,name='generate_study_notes'),
+    path('show_study_notes',show_study_notes,name='show_study_notes'),
 #billing page
+
 
     path('billing',billing,name='billing'),
    # path('d5717186-3502-4378-8308-e2700382498b',webhook,name='webhook'),

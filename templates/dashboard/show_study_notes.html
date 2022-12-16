@@ -1,0 +1,56 @@
+
+{%extends 'layout/dashboard.html'%}
+
+{%load static%}
+
+{%block body%}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+      
+        <div class="row">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10"></div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="mb-3">Writo generated following study notes for you!!💃</h2>
+                <table class="table table-hover">
+                
+
+
+                    <tbody>
+                        {% for notes in generate_study_notes %}
+                        <tr>
+                            <th><h4>{{notes}}</h4></th>
+                        </tr>
+                        {%endfor%}
+
+                    </tbody>
+
+
+                    
+                </table>
+                 
+                 
+                 
+                
+                </div>
+                <div class="col-lg-4">
+                    <img src="{% static 'landing/img/undraw_articles_wbpb.svg '%}" alt = "Create Blog">
+
+                </div>
+            </div>
+
+        </div>
+      <div class="col-lg-1"></div>
+  
+  </div>
+  </div>
+{%endblock%}
+
+
+

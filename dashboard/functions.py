@@ -215,3 +215,146 @@ def text_to_keywords(product_desc):
         return []
 
     return keywords
+
+
+
+
+
+#function for keyword extraction
+
+
+def extract_contact(text):
+    contact_info = []
+
+    response = openai.Completion.create(
+  model="text-davinci-003",
+  prompt="Extract the all names, contact number, email, mailing address and dates from text:{} \n*".format(text),
+  temperature=0,
+  max_tokens=256,
+  top_p=1,
+  frequency_penalty=0,
+  presence_penalty=0
+)
+
+    if 'choices' in response:
+        if len(response['choices'])>0:
+            res = response['choices'][0]['text']
+        else:
+            return []
+    else:
+        return []
+    
+    a_list = res.split('*')
+    if len(a_list) > 0:
+        for con in a_list:
+            contact_info.append(con)
+    else:
+        return []
+
+    return contact_info
+
+
+#function for generating study notes
+
+def study_notes(topic):
+    topic_detail = []
+
+    response = openai.Completion.create(
+  model="text-davinci-003",
+  prompt="Generate a study notes for the topic:{}\n*".format(topic),
+  temperature=0.3,
+  max_tokens=500,
+  top_p=1,
+  frequency_penalty=0,
+  presence_penalty=0
+)
+    if 'choices' in response:
+        if len(response['choices'])>0:
+            res = response['choices'][0]['text']
+        else:
+            return []
+    else:
+        return []
+    
+    a_list = res.split('*')
+    if len(a_list) > 0:
+        for top_ic in a_list:
+            topic_detail.append(top_ic)
+    else:
+        return []
+
+    return topic_detail
+
+
+
+
+
+#review generator for comapanies
+
+
+def review_generator(company_type,company_name,keywords):
+    reviews = []
+
+    response = openai.Completion.create(
+  model="text-davinci-003",
+  prompt="Write a review based on these notes:\n\ncompnay type:{} \nName: {}\nkeywords: {}\n\n*".format(company_type,company_name,keywords),
+  temperature=0.5,
+  max_tokens=400,
+  top_p=1,
+  frequency_penalty=0,
+  presence_penalty=0
+)
+    if 'choices' in response:
+        if len(response['choices'])>0:
+            res = response['choices'][0]['text']
+        else:
+            return []
+    else:
+        return []
+    
+    a_list = res.split('*')
+    if len(a_list) > 0:
+        for revi_ews in a_list:
+            reviews.append(revi_ews)
+    else:
+        return []
+
+    return reviews
+
+
+
+
+
+#function for transforming text into easy to understand format
+
+
+
+def easy_text(text):
+    transformed_text = []
+
+    response = openai.Completion.create(
+  model="text-davinci-003",
+  prompt="Transform this text into easy to understand format for a  students and convert difficult vocabulary into easy synonyms:{}\n".format(text),
+  temperature=0.7,
+  max_tokens=499,
+  top_p=1,
+  frequency_penalty=0,
+  presence_penalty=0
+)
+
+    if 'choices' in response:
+        if len(response['choices'])>0:
+            res = response['choices'][0]['text']
+        else:
+            return []
+    else:
+        return []
+    
+    a_list = res.split('*')
+    if len(a_list) > 0:
+        for tex_t in a_list:
+            transformed_text.append(tex_t)
+    else:
+        return []
+
+    return transformed_text

@@ -451,10 +451,83 @@ def show_keywords(request):
 
 
 
+#function for extract contact info from data
+
+@login_required
+def contact_info(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        text = request.POST['text']
+        #saving product desc string in a session in order to use it later
+        request.session['text'] = text
+
+
+        keywords = extract_contact(text)
+        if len(keywords) > 0:
+            request.session['contact_info'] = keywords
+            return redirect('show_contact')
+        else:
+            messages.error(request,"oops we coounld not generate keywords for you")
+            return redirect('show_contact')
+
+    return render(request,'dashboard/contact_info.html',context)
 
 
 
+@login_required
+def show_contact(request):
+    if 'contact_info' in request.session:
+        pass
+    else:
+        messages.error(request,"start by providing the text")
+        return redirect('contact_info')
 
+    context = {}
+    context['contact_info'] = request.session['contact_info']
+
+    return render(request,'dashboard/show_contact.html',context)
+
+
+#function for generating study notes from topic
+
+
+@login_required
+def generate_study_notes(request):
+    context = {}
+
+    if request.method == 'POST':
+        #retreiving the product desc from a submitting form
+        topic = request.POST['topic']
+        #saving product desc string in a session in order to use it later
+        request.session['topic'] = topic
+
+
+        notes = study_notes(topic)
+        if len(notes) > 0:
+            request.session['generate_study_notes'] = notes
+            return redirect('show_study_notes')
+        else:
+            messages.error(request,"oops we coounld not generate keywords for you")
+            return redirect('show_study_notes')
+
+    return render(request,'dashboard/study_notes.html',context)
+
+
+
+@login_required
+def show_study_notes(request):
+    if 'generate_study_notes' in request.session:
+        pass
+    else:
+        messages.error(request,"start by providing the text")
+        return redirect('generate_study_notes')
+
+    context = {}
+    context['generate_study_notes'] = request.session['generate_study_notes']
+
+    return render(request,'dashboard/show_study_notes.html',context)
 
 
 
